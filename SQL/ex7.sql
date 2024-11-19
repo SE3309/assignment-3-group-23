@@ -14,17 +14,17 @@ CREATE VIEW postSummary (
     IsPopular) 
 AS SELECT 
     p.postId,
-    p.description,
+    p.descript,
     u.userName,
-    COUNT(*),
+    COUNT(c.commentId),
     CASE 
-        WHEN COUNT(*) > 5 THEN 'Yes'
+        WHEN COUNT(c.commentId) > 5 THEN 'Yes'
         ELSE 'No'
     END AS IsPopular
 FROM Post p
 JOIN User u ON p.userId = u.userId
 LEFT JOIN Comment c ON p.postId = c.postId
-GROUP BY p.postId, p.description, u.userName;
+GROUP BY p.postId, p.descript, u.userName;
 
 /*
 	this will provide a summary of posts and their engagement
