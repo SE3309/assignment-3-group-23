@@ -3,9 +3,9 @@ USE lab3_DB;
 CREATE TABLE Weather (
     locationName VARCHAR(255) NOT NULL,
     wTimeStamp DATETIME NOT NULL, -- format YYYY-MM-DD HH:MM:SS
-    waveSize DECIMAL(5, 2),
-    precipitation DECIMAL(5, 2),
-    windSpeed DECIMAL(5, 2),
+    waveSize DECIMAL(5, 2) CHECK (waveSize >= 0),
+    precipitation DECIMAL(5, 2) CHECK (precipitation >= 0),
+    windSpeed DECIMAL(5, 2) CHECK (windSpeed >= 0),
     PRIMARY KEY (locationName, wTimeStamp)
     /*
 		Add the foreign key for locationName
