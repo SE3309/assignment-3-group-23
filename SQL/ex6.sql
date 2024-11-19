@@ -1,6 +1,7 @@
 UPDATE SurfLocation
 SET surfScore = surfScore * 1.10
 WHERE countryName = 'Australia';
+
 /*
 	update all surfScores in austrailia due to the 
     fact that they scale there surfScore 
@@ -17,4 +18,14 @@ WHERE postId IN (
 );
 -- deletes comments with posts with 3 or more comments
 
+INSERT INTO Risks (locationName, riskType, riskDescription)
+SELECT l.locationName, 'General', 'Default risk description'
+FROM SurfLocation l
+WHERE l.locationName NOT IN (SELECT r.locationName FROM Risks r);
 
+/*
+	Identifies locations in SurfLocation 
+	that have no risks in the Risks table.
+	then adds Adds a "General" risk with a 
+    placeholder description to those locations.
+*/    
