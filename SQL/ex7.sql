@@ -7,16 +7,16 @@ GROUP BY u.userId, u.userName;
 -- this will get the number of comments a user has created
 
 CREATE VIEW postSummary (
-	PostID, 
-	PostDescription,
-    CreatorName, 
-    CommentCount, 
+	postId, 
+	descript,
+    userName, 
+    commentCount, 
     IsPopular) 
 AS SELECT 
     p.postId,
     p.descript,
     u.userName,
-    COUNT(c.commentId),
+    COUNT(c.commentId) AS commentCount,
     CASE 
         WHEN COUNT(c.commentId) > 5 THEN 'Yes'
         ELSE 'No'
@@ -34,19 +34,19 @@ GROUP BY p.postId, p.descript, u.userName;
 */
 
 CREATE VIEW locationRiskWeatherSummary (
-    LocationName,
-    Country,
-    AverageWaveSize,
-    MaxWindSpeed,
-    RiskCount,
-    HasSharks
+    locationName,
+    country,
+    averageWaveSize,
+    windSpeed,
+    riskCount,
+    hasSharks
 ) AS
 SELECT 
     l.locationName,
-    l.countryName,
-    AVG(w.waveSize),
-    MAX(w.windSpeed),
-    COUNT(r.riskType),
+    l.country,
+    AVG(w.waveSize) AS averageWaveSize,
+    MAX(w.windSpeed) AS windSpeed,
+    COUNT(r.riskType) AS riskCount,
     CASE 
         WHEN SUM(CASE WHEN r.riskType = 'Sharks' THEN 1 ELSE 0 END) > 0 THEN 'Yes'
         ELSE 'No'
