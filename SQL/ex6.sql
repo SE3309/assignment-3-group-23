@@ -1,31 +1,22 @@
+#Task 6
+#1. Update all surf locations in Australia to have a higher surfScore
+	#"interesting" in that it updates several tuples at once
 UPDATE SurfLocation
-SET surfScore = surfScore * 1.10
-WHERE countryName = 'Australia';
+	SET surfScore = surfScore * 1.10
+	WHERE  countryName = "Australia" AND
+		   breakType = "reef";
 
-/*
-	update all surfScores in austrailia due to the 
-    fact that they scale there surfScore 
-	easiers then the rest of the world
-*/
+#2. Makes a user who posted a comment on a specific date like that specific comment
+	#"interesting" in that it inserts the result of a query
+INSERT INTO Likes (commentId, userId, likedStatus)
+	(SELECT c.commentId, c.userId, true
+	 FROM Comments c
+	 WHERE c.cTimeStamp = "1998-07-04 03:05:30");
 
-DELETE FROM Comment
-WHERE postId IN (
-    SELECT p.postId
-    FROM Post p
-    LEFT JOIN Comment c ON p.postId = c.postId
-    GROUP BY p.postId
-    HAVING COUNT(c.commentId) < 3
-);
--- deletes comments with posts with 3 or more comments
-
-INSERT INTO Risks (locationName, riskType, riskDescription)
-SELECT l.locationName, 'General', 'Default risk description'
-FROM SurfLocation l
-WHERE l.locationName NOT IN (SELECT r.locationName FROM Risks r);
-
-/*
-	Identifies locations in SurfLocation 
-	that have no risks in the Risks table.
-	then adds Adds a "General" risk with a 
-    placeholder description to those locations.
-*/    
+#3. Insert a placeholder risk for locations without any risk(s)
+	#"interesting" in that it inserts the result of a query (and sub-query) and will update several tuples
+INSERT INTO Risks(locationName, riskType, riskDescription)
+SELECT sl.locationName, 'Placeholder', 'Placeholder risk description'
+	FROM SurfLocation sl
+	WHERE sl.locationName NOT IN (SELECT r.locationName
+								  FROM Risks r);

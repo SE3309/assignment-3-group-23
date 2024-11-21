@@ -1,4 +1,5 @@
-#Set-Up Insert Statements
+#Task 3
+#Set-Up Insert Statements:
 INSERT INTO Users(userName, fName, lName, pEmail, psword)
 VALUES("testUNAME","testFNAME","testLNAME","testEMAIL","testPSWD");
 
@@ -12,10 +13,10 @@ VALUES	("Bondi Beach", "Bondi", "reef", 7, 1, "Australia"),
 		("Gray's Beach", "Gray's", "fast", 2, 1, "Hawaii");
 
 INSERT INTO Risks(riskType, riskDescription, locationName)
-VALUES("Strong Currents", "This sample risk decription will outline that Strong Currents mean there are strong currents at the location", "Bondi Beach");
+VALUES("Strong Currents", "This sample risk decription will outline ...", "Bondi Beach");
 
-#Marked INSERTS
-#BASIC INSERT - works
+#Marked Insert Statements:
+#Basic INSERT
 INSERT INTO Weather
 VALUES (10.21, "2024-11-21 11:10:00", true, 15.0, "Bondi Beach");
 
@@ -31,7 +32,4 @@ INSERT INTO Weather (locationName, wTimeStamp, waveSize, precipitation, windSpee
 			("Kuhio Beach", "2024-11-19 16:30:00", 4.00, false, 8.00), 
             ("Gray's Beach", "2024-11-20 12:45:00", 6.50, true, 20.00);
 
-/*
-INSERT INTO Weather 
-VALUES (1, "tester","testEmail") 
-*/
+SELECT * FROM Weather;

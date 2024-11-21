@@ -1,16 +1,14 @@
-DROP TABLE Country, Users, SurfLocation, Post, Weather, Risks, Comments, Likes;
+#DROP TABLE Country, Users, SurfLocation, Post, Weather, Risks, Comments, Likes;
 
-#AUTO_INCREMENT: Auto-increments, great for unique id’ s.
-
+#Task 2: 
 CREATE TABLE Country
 (	countryName 	VARCHAR(255) NOT NULL,
 	numLocations 	INT			 NOT NULL	DEFAULT 0	CHECK(numLocations >=0),
     
 	PRIMARY KEY (countryName)
 );
+DESCRIBE Country;
 
-
-#NOTE: User and password are both reserved words smfh, so changed them below
 CREATE TABLE Users
 (	userId 		BIGINT 			NOT NULL 	AUTO_INCREMENT,
 	userName 	VARCHAR(255) 	NOT NULL,
@@ -22,6 +20,7 @@ CREATE TABLE Users
     PRIMARY KEY (userId),
     UNIQUE(userName, pEmail)
 );
+DESCRIBE Users;
 
 CREATE Table SurfLocation
 (
@@ -37,12 +36,12 @@ CREATE Table SurfLocation
     FOREIGN KEY (userId) REFERENCES Users(userId),
     FOREIGN KEY (countryName) REFERENCES Country(countryName)
 );
+DESCRIBE SurfLocation;
 
-#Note: timestamp & dscription are reserved words, had to change
 CREATE TABLE Post
 (	postId 			BIGINT 			NOT NULL 	AUTO_INCREMENT,
-	descript 		VARCHAR(255) 	NOT NULL,
-	pTimeStamp 		DATETIME 		NOT NULL, -- format YYYY-MM-DD HH:MM:SS
+	descript 		TEXT		 	NOT NULL,
+	pTimeStamp 		DATETIME 		NOT NULL,
 	userId 			BIGINT 			NOT NULL,
 	locationName 	VARCHAR(255) 	NOT NULL,
     
@@ -50,6 +49,7 @@ CREATE TABLE Post
     FOREIGN KEY (userId) REFERENCES Users(userId),
     FOREIGN KEY (locationName) REFERENCES SurfLocation(locationName)
 );
+DESCRIBE Post;
 
 CREATE TABLE Weather
 ( 	waveSize 		DECIMAL(5,2) 	NOT NULL				CHECK(waveSize >=0),
@@ -61,6 +61,7 @@ CREATE TABLE Weather
     PRIMARY KEY (locationName, wTimeStamp),
     FOREIGN KEY (locationName) REFERENCES SurfLocation(locationName)
 );
+DESCRIBE Weather;
 
 CREATE TABLE Risks
 (	riskType 		VARCHAR(255) NOT NULL,
@@ -68,11 +69,10 @@ CREATE TABLE Risks
 	locationName 	VARCHAR(255) NOT NULL,
     
     PRIMARY KEY (locationName, riskType),
-    UNIQUE(riskType),
     FOREIGN KEY (locationName) REFERENCES SurfLocation(locationName)
 );
+DESCRIBE Risks;
 
-#Note: comment, description, timestamp are reserved words, had to change
 CREATE TABLE Comments
 (	commentId 	BIGINT 			NOT NULL 	AUTO_INCREMENT,
 	descript 	TEXT		 	NOT NULL,
@@ -84,11 +84,10 @@ CREATE TABLE Comments
 	FOREIGN KEY (userId) REFERENCES Users(userId),
     FOREIGN KEY (postId) REFERENCES Post(postId)
 );
+DESCRIBE Comments;
 
-#Note: like is a reserved word, had to change
 CREATE TABLE Likes
-(
-	likedStatus 	BOOLEAN 	NOT NULL 	DEFAULT false,
+(	likedStatus 	BOOLEAN 	NOT NULL 	DEFAULT false,
 	userId 			BIGINT 		NOT NULL,
     commentId 		BIGINT 		NOT NULL,
     
@@ -96,12 +95,4 @@ CREATE TABLE Likes
 	FOREIGN KEY (userId) REFERENCES Users(userId),
     FOREIGN KEY (commentId) REFERENCES Comments(commentId)
 );
-
-DESCRIBE Country;
-DESCRIBE Users;
-DESCRIBE SurfLocation;
-DESCRIBE Post;
-DESCRIBE Weather;
-DESCRIBE Risks;
-DESCRIBE Comments;
 DESCRIBE Likes;
